@@ -1,0 +1,19 @@
+{
+    "folder-color.pathColors": [
+        {
+            "folderPath": "WEB\\nexus-web\\resources\\",
+            "isFolderOnly": true,
+            "color": "foldercolorizer.color_afff5f"
+        },
+        {
+            "folderPath": "WEB\\nexus-web\\routes\\",
+            "isFolderOnly": true,
+            "color": "foldercolorizer.color_ff0000"
+        },
+        {
+            "folderPath": "WEB\\nexus-web\\database\\",
+            "color": "foldercolorizer.color_5fd7ff",
+            "isFolderOnly": true
+        }
+    ]
+}
