@@ -14,7 +14,7 @@
 <body>
     <div class="nexus-layout">
         <aside class="sidebar" id="sidebar">
-            <a href="{{ route('nexus.dashboard') }}" class="brand">
+            <a wire:navigate href="{{ route('nexus.dashboard') }}" class="brand">
                 <span class="brand-icon"><i class="bi bi-command"></i></span>
                 <span>NEXUS</span>
             </a>
