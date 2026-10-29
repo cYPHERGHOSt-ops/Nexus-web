@@ -7,10 +7,10 @@ use App\Http\Controllers\AtividadeController;
 use App\Http\Controllers\AtividadeConclusaoController;
 use App\Http\Controllers\TransacaoController;
 
-// Página inicial
+// pagina de login
 Route::redirect('/', '/login');
 
-// Páginas do Borus
+// dashboard porem so entra que esta logado 
 Route::middleware('auth')->group(function () {
 
     Route::view('/dashboard', 'nexus.dashboard')->name('dashboard');

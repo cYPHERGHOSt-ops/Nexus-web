@@ -1,36 +1,85 @@
+
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title', 'Borus')</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+    @livewireStyles
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+    <style>
+        body {
+            background: #090909;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .borus-nav {
+            background: #141414;
+            border-bottom: 1px solid #292929;
+        }
+
+        .borus-nav a {
+            color: #aaa;
+            text-decoration: none;
+        }
+
+        .borus-nav a:hover,
+        .borus-nav a.active {
+            color: #fff;
+        }
+
+        .borus-content {
+            max-width: 1200px;
+            margin: auto;
+            padding: 30px 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="borus-nav px-4 py-3">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+            <a href="{{ route('dashboard') }}" class="fw-bold text-white" wire:navigate>
+                BORUS
+            </a>
+
+            <div class="d-flex gap-3 flex-wrap">
+                <a href="{{ route('dashboard') }}" wire:navigate>Dashboard</a>
+                <a href="{{ route('nexus.rotina') }}" wire:navigate>Rotina</a>
+                <a href="{{ route('nexus.financas') }}" wire:navigate>Finanças</a>
+                <a href="{{ route('nexus.perfil') }}" wire:navigate>Perfil</a>
+            </div>
+
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="btn btn-sm btn-outline-light">
+                    Sair
+                </button>
+            </form>
+
         </div>
-    </body>
+    </nav>
+    
+    {{-- Conteúdo da página --}}
+    <main class="borus-content">
+        @yield('content')
+
+        @isset($slot)
+            {{ $slot }}
+        @endisset
+    </main>
+
+    @livewireScripts
+
+</body>
 </html>
