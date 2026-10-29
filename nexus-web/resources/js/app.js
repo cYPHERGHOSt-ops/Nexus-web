@@ -1,4 +1,3 @@
-import './bootstrap';
-/*import do bootstrap e css*/
-import 'bootstrap';
-import '../css/app.css';
+import './bootstrap';   
+
+//aqui o codigo tava duplicando o vite 
