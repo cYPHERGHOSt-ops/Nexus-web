@@ -26,18 +26,24 @@ class AtividadeController extends Controller
         return $atividade;
     }      //se o id do usuario for diferente do id da aitividade ele retorna o erro 403 
              //ainda vou pedsquiasr para saber se da para criar paginas de erro personalizadas 
-           
+            //aqui ele cria atividades store==guardar
  
-    public function store(Request $request)    //aqui ele cria atividades store==guardar
-    {
-        return $request->user()->atividades()->create(
-            $request->only([
-                'titulo', 'descricao', 'tipo',
-                'data_inicio', 'data_fim',
-                'dias_semana', 'horario'
-            ])
-        );
-    }
+
+public function store(Request $request)
+{
+    $atividade = $request->user()->atividades()->create(
+        $request->only([
+            'titulo', 'descricao', 'tipo',
+            'data_inicio', 'data_fim',
+            'dias_semana', 'horario'
+        ])
+    );
+
+    return $request->expectsJson()
+        ? response()->json($atividade, 201)
+        : redirect()->route('dashboard');
+}
+
 
     public function update(Request $request, Atividade $atividade)   //aqui ele atualiza as atividades
     {
