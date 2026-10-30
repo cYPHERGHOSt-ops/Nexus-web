@@ -17,6 +17,8 @@ class AtividadeConclusaoController extends Controller
             'data' => $request->input('data', now()->toDateString()) //vai salvar que a atividade foi concluida hoje
             //no caso quando ela for comleta
         ]);
+
+        return response()->json($atividade, 201);
     }
 
     public function destroy(Request $request, Atividade $atividade)  //apaga a conclusão da atividade

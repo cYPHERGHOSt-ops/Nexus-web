@@ -119,7 +119,7 @@
 
         <div class="auth-card">
             <div class="mb-5">
-                <h1 class="borus-title mb-2">BORUS</h1>
+                <h1 class="borus-title mb-2">Borus</h1>
                 <p class="text-secondary">
                     Organize. Evolua. Conquiste.
                 </p>
