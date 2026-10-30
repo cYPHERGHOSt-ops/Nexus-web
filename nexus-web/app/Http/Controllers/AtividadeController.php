@@ -37,11 +37,11 @@ public function store(Request $request)
             'data_inicio', 'data_fim',
             'dias_semana', 'horario'
         ])
+
+   
     );
 
-    return $request->expectsJson()
-        ? response()->json($atividade, 201)
-        : redirect()->route('dashboard');
+  return response()->json($atividade, 201);
 }
 
 

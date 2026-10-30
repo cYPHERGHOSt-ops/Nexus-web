@@ -1,46 +1,51 @@
-// Intercepta formulários do Borus e atualiza a view sem recarregar toda a página.
-// Usa os endpoints JSON que já existem nos controllers de atividades e transações.
+
 document.addEventListener('submit', async (event) => {
     const form = event.target.closest('form[data-borus-form]');
-    if (!form) return;
+
+    // Por enquanto, apenas formulários da Rotina
+   if (!form || !form.closest('.rotina, .financas')) return;
 
     event.preventDefault();
-    const button = form.querySelector('[type="submit"]');
-    if (button) button.disabled = true;
 
-    const alert = document.getElementById('borus-form-error');
-    if (alert) alert.remove();
+    if (form.dataset.loading === 'true') return;
+
+    const botao = form.querySelector('button[type="submit"]');
+
+    form.dataset.loading = 'true';
+    if (botao) botao.disabled = true;
 
     try {
-        const response = await fetch(form.action, {
-            method: 'POST',
+        const resposta = await fetch(form.action, {
+            method: form.method,
+            body: new FormData(form),
             credentials: 'same-origin',
             headers: {
                 'Accept': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-            },
-            body: new FormData(form),
+                'X-Requested-With': 'XMLHttpRequest'
+            }
         });
 
-        if (!response.ok) {
-            const data = await response.json().catch(() => ({}));
-            const detail = data.errors ? Object.values(data.errors).flat().join(' ') : data.message;
-            throw new Error(detail || `Erro HTTP ${response.status}`);
+        const dados = await resposta.json().catch(() => ({}));
+
+        if (!resposta.ok) {
+            const erros = Object.values(dados.errors || {}).flat();
+
+            throw new Error(
+                erros[0] || dados.message || 'Erro ao salvar atividade.'
+            );
         }
 
-        // Navegação interna do Livewire: substitui só a página e busca os dados atualizados.
+        // Atualiza a Rotina sem recarregar o navegador inteiro
         if (window.Livewire?.navigate) {
-            window.Livewire.navigate(window.location.href);
+            window.Livewire.navigate(window.location.pathname);
         } else {
             window.location.reload();
         }
-    } catch (error) {
-        const message = document.createElement('p');
-        message.id = 'borus-form-error';
-        message.className = 'borus-alert mt-2';
-        message.textContent = `Não foi possível salvar: ${error.message}`;
-        form.appendChild(message);
-        if (button) button.disabled = false;
+
+    } catch (erro) {
+        alert(erro.message);
+    } finally {
+        form.dataset.loading = 'false';
+        if (botao) botao.disabled = false;
     }
 });
