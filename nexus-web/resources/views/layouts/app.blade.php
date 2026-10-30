@@ -32,21 +32,31 @@
         .borus-layout {
             display: flex;
             min-height: 100dvh;
+
         }
 
-        .sidebar {
-            width: 240px;
-            flex-shrink: 0;
-            background: #111;
-            border-right: 1px solid #292929;
-            padding: 25px 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            position: sticky;
-            top: 0;
-            height: 100dvh;
-        }
+       
+.sidebar {
+    width: 240px;
+    height: 100dvh;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    background: #111;
+    border-right: 1px solid #292929;
+    padding: 25px 16px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    overflow-y: auto;
+    z-index: 100;
+}
+
+
+
 
         .sidebar .title {
             font-family: 'Manufacturing Consent', serif;
@@ -83,76 +93,100 @@
             margin-top: auto;
         }
 
-        .borus-main {
-            flex: 1;
-            min-width: 0;
-            padding: 30px;
+.borus-main {
+    flex: 1;
+    min-width: 0;
+    margin-left: 240px;
+    padding: 30px;
+}
+
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 768px) {
+            .borus-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                padding: 15px;
+                gap: 12px;
+            }
+
+            .sidebar nav {
+                flex-direction: row;
+                overflow-x: auto;
+            }
+
+            .sidebar nav a {
+                white-space: nowrap;
+            }
+
+            .sidebar .logout {
+                margin-top: 0;
+            }
+
+            .borus-main {
+                padding: 20px 15px;
+            }
         }
 
-    
-/* RESPONSIVIDADE */
-@media (max-width: 768px) {
-    .borus-layout {
-        flex-direction: column;
-    }
+        /* DRAGÃO DE FUNDO */
+        .borus-dragon-bg {
+            position: relative;
+            isolation: isolate;
+            height: 110vh;
+        }
 
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: static;
-        padding: 15px;
-        gap: 12px;
-    }
+        .borus-dragon-bg::before {
+            content: "";
+            position: absolute;
+            inset: 0;
 
-    .sidebar nav {
-        flex-direction: row;
-        overflow-x: auto;
-    }
+            background-image: url('/images/borus.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: min(800px, 90%);
 
-    .sidebar nav a {
-        white-space: nowrap;
-    }
+            opacity: 0.05;
+            filter: invert(1);
 
-    .sidebar .logout {
-        margin-top: 0;
-    }
+            pointer-events: none;
+            z-index: 0;
+        }
 
-    .borus-main {
-        padding: 20px 15px;
-    }
-}
-
-/* DRAGÃO DE FUNDO */
-.borus-dragon-bg {
-    position: relative;
-    isolation: isolate;
-    height: 110vh;
-}
-
-.borus-dragon-bg::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-
-    background-image: url('/images/borus.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: min(800px, 90%);
-
-    opacity: 0.05;
-    filter: invert(1);
-
-    pointer-events: none;
-    z-index: 0;
-}
-
-/* Conteúdo fica na frente do dragão */
-.borus-dragon-bg > * {
-    position: relative;
-    z-index: 1;
-}
+        /* Conteúdo fica na frente do dragão */
+        .borus-dragon-bg>* {
+            position: relative;
+            z-index: 1;
+        }
 
         
+/* Transição entre páginas */
+.borus-main {
+    animation: borus-entrar 0.7s ease-out both;
+}
+
+@keyframes borus-entrar {
+    from {
+        opacity: 0.6;
+
+    }
+
+    to {
+        opacity: 1;
+      
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .borus-main {
+        animation: none;
+    }
+}
+
     </style>
 </head>
 
