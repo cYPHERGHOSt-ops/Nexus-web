@@ -126,7 +126,7 @@
 .borus-dragon-bg {
     position: relative;
     isolation: isolate;
-    min-height: 80vh;
+    height: 110vh;
 }
 
 .borus-dragon-bg::before {
@@ -139,7 +139,7 @@
     background-repeat: no-repeat;
     background-size: min(800px, 90%);
 
-    opacity: 0.03;
+    opacity: 0.05;
     filter: invert(1);
 
     pointer-events: none;

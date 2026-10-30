@@ -300,7 +300,7 @@
 
 /* Cartões */
 .financas-card {
-    background: #171717;
+    background: #171717b0;
     border: 1px solid #303030;
     border-radius: 16px;
     padding: 24px;
